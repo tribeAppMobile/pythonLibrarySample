@@ -40,6 +40,29 @@ class AccountManager():
 		self.__list.append(new_account)
 		print('List now is', self.__list)
 
+	def editAccount(self, username, password='', name=''):
+		for account in self.__list:
+			# prevent case-sensitive
+			if (account.getUsername().lower() == username.lower()):
+				if (len(password) > 0):
+					account.setPassword(password)
+				if (len(name) > 0):
+					account.setName(name)
+				break
+
+	def deleteAccount(self, username):
+		for account in self.__list:
+			if (account.getUsername().lower() == username.lower()):
+				self.__list.remove(account)
+				return True
+		return False
+
+	def authenticate(self, username, password):
+		for account in self.__list:
+			if (account.checkAuthentication(username, password)):
+				return account
+		return None
+
 	def printAccount(self):
 		# for index in range(0, len(self.__list)):
 		# 	account = self.__list[index]
